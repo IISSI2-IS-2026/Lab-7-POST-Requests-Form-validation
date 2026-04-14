@@ -203,7 +203,7 @@ Backend provides a POST endpoint to create a restaurant. Notice that handling of
             style: GlobalStyles.flashStyle,
             titleStyle: GlobalStyles.flashTextStyle
           })
-          navigation.navigate('RestaurantsScreen', { dirty: true })
+          navigation.navigate('RestaurantsScreen') // we will add this parameter in the future: { dirty: true })
         } catch (error) {
           console.log(error)
           setBackendErrors(error.errors)
@@ -236,20 +236,29 @@ Once a new restaurant has been created, we need to refresh the Restaurants list 
 
 To this end, we need to:
 * add the `{route}` as a component prop at `RestaurantsScreen.js`:
+
   ```javascript
     export default function RestaurantsScreen({ navigation, route })
     ```
+
 * add another trigger variable to the `useEffect` that queries the restaurant list. At the moment it was triggered if `loggedInUser` was changed, now add the route param as follows:
 
   ```javascript
-  useEffect(() => {
-      if (loggedInUser) {
-        fetchRestaurants()
-      } else {
-        setRestaurants(null)
-      }
-    }, [loggedInUser])
+    useEffect(() => {
+    if (loggedInUser) {
+      fetchRestaurants()
+    } else {
+      setRestaurants(null)
+    }
+  }, [loggedInUser, route])
   ```
+
+* in `CreateRestaurantsScreen.js`, update the navigation logic within the `createRestaurant` function. We will pass a parameter (e.g., `{ dirty: true }`) to signal that the data is "stale" and needs to be reloaded:
+
+  ```javascript
+        navigation.navigate('RestaurantsScreen', { dirty: true })
+  ```
+
 
 Test the complete solution.
 
