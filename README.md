@@ -93,7 +93,7 @@ We will include the validation for the `CreateRestaurantScreen` form by followin
       .positive()
       .integer()
       .required('Restaurant category is required')
-  })
+     })
    ```
 
    Notice that:
@@ -158,12 +158,10 @@ We will include the validation for the `CreateRestaurantScreen` form by followin
    - `InputItem` is a component the includes the error handling. However, non-standard input controls from 3rd parties don't handle `Formik` errors. For instance, `Dropdown picker` does not handle these errors, so add the following `<ErrorMessage>` component following the dropdown picker:
 
      ```JSX
-
-    <ErrorMessage
-      name={'restaurantCategoryId'}
-      render={msg => <TextError>{msg}</TextError>}
-    />
-
+       <ErrorMessage
+         name={'restaurantCategoryId'}
+         render={msg => <TextError>{msg}</TextError>}
+       />
      ```
 
 1. Next, we need to modify the final `<Pressable>` component to call the `handleSubmit` method. Modify the `onPress` handler definition: `onPress={handleSubmit}`
